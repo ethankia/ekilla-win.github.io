@@ -3,261 +3,262 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Projects - EK Development</title>
+<title>EK Development</title>
 
-<script src="https://cdn.tailwindcss.com"></script>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 
 <style>
-body{
-font-family:'Inter',sans-serif;
-background:#0a0a0a;
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(135deg, #0f172a, #111827, #0f172a);
+    color: white;
+    overflow-x: hidden;
 }
 
-.code-font{font-family:'JetBrains Mono',monospace;}
+/* NAVBAR */
+nav {
+    position: fixed;
+    top:0;
+    width:100%;
+    backdrop-filter: blur(15px);
+    background: rgba(15,23,42,.6);
+    padding: 15px 50px;
+    display:flex;
+    justify-content: space-between;
+    align-items:center;
+    z-index:1000;
+}
+nav a {
+    color:white;
+    text-decoration:none;
+    margin-left:25px;
+    font-weight:600;
+    transition:.3s;
+}
+nav a:hover { color:#38bdf8; }
 
-.gradient-text{
-background:linear-gradient(135deg,#8b5cf6,#3b82f6,#06b6d4);
--webkit-background-clip:text;
--webkit-text-fill-color:transparent;
+/* SECTIONS */
+section {
+    padding:120px 50px;
+    min-height:100vh;
 }
 
-.project-card{
-background:linear-gradient(135deg,#1e1e1e,#2d2d2d);
-border:1px solid rgba(139,92,246,0.25);
-transition:.3s;
+/* PROJECTS */
+.projects {
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px,1fr));
+    gap:30px;
+}
+.card {
+    background: rgba(255,255,255,.05);
+    padding:30px;
+    border-radius:20px;
+    transition:.3s;
+}
+.card:hover {
+    transform:translateY(-8px);
+    background: rgba(255,255,255,.1);
 }
 
-.project-card:hover{
-transform:translateY(-5px);
-box-shadow:0 20px 40px rgba(139,92,246,.3);
-border-color:rgba(139,92,246,.6);
+/* GAME */
+#gameContainer {
+    position:relative;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+}
+
+canvas {
+    background: radial-gradient(circle at center, #0f172a, #020617);
+    border-radius:20px;
+    box-shadow: 0 0 50px rgba(56,189,248,.3);
+}
+
+#deathScreen {
+    position:absolute;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,.85);
+    display:none;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    font-size:2rem;
+    border-radius:20px;
+}
+
+/* UPGRADES */
+#upgradeArea {
+    margin-top:30px;
+    display:flex;
+    gap:20px;
+}
+.upgradeBtn {
+    background:#38bdf8;
+    border:none;
+    padding:10px 20px;
+    border-radius:10px;
+    font-weight:600;
+    cursor:pointer;
+    transition:.3s;
+}
+.upgradeBtn:hover {
+    background:#0ea5e9;
+}
+
+button.restart {
+    margin-top:20px;
+    padding:10px 20px;
+    border:none;
+    border-radius:10px;
+    font-weight:bold;
+    background:#38bdf8;
+    cursor:pointer;
 }
 </style>
 </head>
 
-<body class="text-white min-h-screen">
+<body>
 
-<!-- NAV -->
-<nav class="fixed top-0 w-full bg-gray-900/80 backdrop-blur-md z-50 border-b border-gray-800">
-<div class="max-w-7xl mx-auto px-4 flex justify-between items-center h-16">
-<h1 class="text-xl font-bold code-font gradient-text">EK Development</h1>
-<div class="hidden md:flex space-x-8">
-<a href="index.html" class="text-gray-300 hover:text-purple-300">Home</a>
-<a href="pricing.html" class="text-gray-300 hover:text-purple-300">Pricing</a>
-<a href="projects.html" class="text-purple-400">Projects</a>
-<a href="contact.html" class="text-gray-300 hover:text-purple-300">Contact</a>
-</div>
-</div>
+<nav>
+    <h2>EK Development</h2>
+    <div>
+        <a href="#home">Home</a>
+        <a href="#projects">Projects</a>
+        <a href="#game">Game</a>
+    </div>
 </nav>
 
-<!-- HEADER -->
-<section class="pt-28 pb-16 text-center bg-gradient-to-br from-gray-900 via-purple-900/20 to-blue-900/20">
-<h1 class="text-5xl font-bold mb-4 gradient-text">My Projects</h1>
-<p class="text-gray-400 text-lg">Explore my work and interactive demos</p>
+<section id="home">
+    <h1 style="font-size:3rem;">Premium Development</h1>
+    <p style="margin-top:20px; max-width:600px;">
+        Clean. Modern. Powerful. High-quality development services and interactive web experiences.
+    </p>
 </section>
 
-<!-- SNAKE GAME -->
-<section class="py-16">
-<div class="max-w-6xl mx-auto px-4 text-center">
-<h2 class="text-4xl font-bold mb-12 gradient-text">Snake Game</h2>
-
-<div class="relative inline-block">
-
-<canvas id="snake-game" width="400" height="400" class="rounded-xl shadow-2xl"></canvas>
-
-<div class="mt-6 flex justify-between items-center max-w-md mx-auto">
-<div class="text-2xl font-bold">
-Score: <span id="score" class="gradient-text">0</span>
-</div>
-<button id="restartBtn"
-class="bg-purple-600 hover:bg-purple-700 px-6 py-2 rounded-lg font-semibold transition">
-Restart
-</button>
-</div>
-
-<div id="deathScreen"
-class="absolute inset-0 flex flex-col items-center justify-center text-center bg-black/80 backdrop-blur-sm opacity-0 pointer-events-none transition duration-300 rounded-xl">
-<h2 class="text-4xl font-bold gradient-text mb-4">Game Over</h2>
-<p class="text-gray-300 mb-4">Final Score: <span id="finalScore"></span></p>
-<p class="text-gray-400 text-sm">Press Space to Restart</p>
-</div>
-
-</div>
-</div>
+<section id="projects">
+    <h1 style="margin-bottom:40px;">Projects</h1>
+    <div class="projects">
+        <div class="card">
+            <h3>Website Builds</h3>
+            <p>Modern, responsive, premium sites.</p>
+        </div>
+        <div class="card">
+            <h3>Game Development</h3>
+            <p>Interactive browser & Roblox games.</p>
+        </div>
+        <div class="card">
+            <h3>Custom UI</h3>
+            <p>Clean dashboards & web apps.</p>
+        </div>
+    </div>
 </section>
 
-<!-- PROJECT GRID -->
-<section class="py-16 bg-gray-800/50">
-<div class="max-w-6xl mx-auto px-4">
-<h2 class="text-4xl font-bold text-center mb-12 gradient-text">More Projects</h2>
+<section id="game">
+    <h1 style="margin-bottom:40px;">Snake Game</h1>
 
-<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+    <div id="gameContainer">
+        <canvas id="gameCanvas" width="500" height="500"></canvas>
 
-<div class="project-card rounded-xl p-6">
-<h3 class="text-xl font-bold mb-2">Portfolio Website</h3>
-<p class="text-gray-300">Modern responsive portfolio with animations and interactive UI.</p>
-</div>
+        <div id="deathScreen">
+            <div>You Died</div>
+            <button class="restart" onclick="restartGame()">Restart</button>
+        </div>
 
-<div class="project-card rounded-xl p-6">
-<h3 class="text-xl font-bold mb-2">Task Manager App</h3>
-<p class="text-gray-300">Full task management app with real-time updates.</p>
-</div>
-
-<div class="project-card rounded-xl p-6">
-<h3 class="text-xl font-bold mb-2">Platformer Game</h3>
-<p class="text-gray-300">2D platformer with levels and power-ups.</p>
-</div>
-
-<div class="project-card rounded-xl p-6">
-<h3 class="text-xl font-bold mb-2">Weather Dashboard</h3>
-<p class="text-gray-300">Live weather dashboard with API integration.</p>
-</div>
-
-<div class="project-card rounded-xl p-6">
-<h3 class="text-xl font-bold mb-2">Chat Application</h3>
-<p class="text-gray-300">Real-time messaging app with rooms.</p>
-</div>
-
-<div class="project-card rounded-xl p-6">
-<h3 class="text-xl font-bold mb-2">E-commerce Platform</h3>
-<p class="text-gray-300">Online store with cart and payments.</p>
-</div>
-
-</div>
-</div>
+        <div id="upgradeArea">
+            <button class="upgradeBtn" onclick="increaseSpeed()">Speed +</button>
+            <button class="upgradeBtn" onclick="increaseSize()">Grow +</button>
+        </div>
+    </div>
 </section>
-
-<footer class="bg-gray-900 border-t border-gray-800 py-8 text-center text-gray-400 code-font">
-© 2025 EK Development. All rights reserved.
-</footer>
 
 <script>
-const canvas=document.getElementById("snake-game");
-const ctx=canvas.getContext("2d");
-const size=20;
-const grid=20;
+const canvas = document.getElementById("gameCanvas");
+const ctx = canvas.getContext("2d");
+const deathScreen = document.getElementById("deathScreen");
 
-let snake,direction,food,score,running;
-let particles=[];
+let gridSize = 20;
+let tileCount = canvas.width / gridSize;
+let snake, food, dx, dy, speed;
+let gameInterval;
 
-function initGame(){
-snake=[{x:10,y:10}];
-direction=null;
-score=0;
-running=true;
-particles=[];
-document.getElementById("score").textContent=0;
-document.getElementById("deathScreen").classList.remove("opacity-100");
-spawnFood();
+function initGame() {
+    snake = [{x:10,y:10}];
+    dx = 1;
+    dy = 0;
+    speed = 120;
+    spawnFood();
+    deathScreen.style.display = "none";
+    startGame();
 }
 
-function spawnFood(){
-food={x:Math.floor(Math.random()*grid),y:Math.floor(Math.random()*grid)};
+function startGame() {
+    clearInterval(gameInterval);
+    gameInterval = setInterval(drawGame, speed);
 }
 
-function gameOver(){
-running=false;
-document.getElementById("finalScore").textContent=score;
-document.getElementById("deathScreen").classList.add("opacity-100");
-burstParticles(snake[0].x*size,snake[0].y*size,"#ff4d6d");
+function spawnFood() {
+    food = {
+        x: Math.floor(Math.random()*tileCount),
+        y: Math.floor(Math.random()*tileCount)
+    };
 }
 
-function burstParticles(x,y,color){
-for(let i=0;i<25;i++){
-particles.push({x,y,vx:(Math.random()-0.5)*4,vy:(Math.random()-0.5)*4,life:40,color});
-}
+function drawGame() {
+    ctx.fillStyle = "#020617";
+    ctx.fillRect(0,0,canvas.width,canvas.height);
+
+    let head = {x: snake[0].x + dx, y: snake[0].y + dy};
+
+    if(head.x < 0 || head.y < 0 || head.x >= tileCount || head.y >= tileCount ||
+       snake.some(segment => segment.x === head.x && segment.y === head.y)) {
+        deathScreen.style.display = "flex";
+        clearInterval(gameInterval);
+        return;
+    }
+
+    snake.unshift(head);
+
+    if(head.x === food.x && head.y === food.y) {
+        spawnFood();
+    } else {
+        snake.pop();
+    }
+
+    snake.forEach((segment,i)=>{
+        ctx.fillStyle = `hsl(${200+i*5},100%,60%)`;
+        ctx.fillRect(segment.x*gridSize, segment.y*gridSize, gridSize-2, gridSize-2);
+    });
+
+    ctx.fillStyle = "#22c55e";
+    ctx.fillRect(food.x*gridSize, food.y*gridSize, gridSize-2, gridSize-2);
 }
 
-function drawGrid(){
-ctx.strokeStyle="rgba(255,255,255,0.03)";
-for(let i=0;i<400;i+=size){
-ctx.beginPath();ctx.moveTo(i,0);ctx.lineTo(i,400);ctx.stroke();
-ctx.beginPath();ctx.moveTo(0,i);ctx.lineTo(400,i);ctx.stroke();
-}
-}
-
-function draw(){
-ctx.fillStyle="#0a0a0a";
-ctx.fillRect(0,0,400,400);
-drawGrid();
-
-if(running){
-let head={...snake[0]};
-if(direction==="LEFT")head.x--;
-if(direction==="RIGHT")head.x++;
-if(direction==="UP")head.y--;
-if(direction==="DOWN")head.y++;
-
-if(head.x<0||head.x>=grid||head.y<0||head.y>=grid||snake.some(s=>s.x===head.x&&s.y===head.y)){
-gameOver();
-}else{
-snake.unshift(head);
-if(head.x===food.x&&head.y===food.y){
-score++;
-document.getElementById("score").textContent=score;
-burstParticles(food.x*size,food.y*size,"#06b6d4");
-spawnFood();
-}else{
-snake.pop();
-}
-}
-}
-
-drawFood();
-drawSnake();
-drawParticles();
-requestAnimationFrame(draw);
-}
-
-function drawSnake(){
-snake.forEach((seg,i)=>{
-let x=seg.x*size;
-let y=seg.y*size;
-let gradient=ctx.createLinearGradient(x,y,x+size,y+size);
-gradient.addColorStop(0,"#8b5cf6");
-gradient.addColorStop(1,"#06b6d4");
-ctx.fillStyle=gradient;
-ctx.beginPath();
-ctx.roundRect(x+2,y+2,size-4,size-4,8);
-ctx.fill();
-});
-}
-
-function drawFood(){
-ctx.shadowColor="#06b6d4";
-ctx.shadowBlur=15;
-ctx.fillStyle="#06b6d4";
-ctx.beginPath();
-ctx.arc(food.x*size+size/2,food.y*size+size/2,6,0,Math.PI*2);
-ctx.fill();
-ctx.shadowBlur=0;
-}
-
-function drawParticles(){
-particles.forEach((p,i)=>{
-p.x+=p.vx;p.y+=p.vy;p.life--;
-ctx.globalAlpha=p.life/40;
-ctx.fillStyle=p.color;
-ctx.fillRect(p.x,p.y,4,4);
-ctx.globalAlpha=1;
-if(p.life<=0)particles.splice(i,1);
-});
-}
-
-document.addEventListener("keydown",e=>{
-if(e.code==="Space"){e.preventDefault();initGame();return;}
-if(!running)return;
-if((e.key==="ArrowLeft"||e.key==="a")&&direction!=="RIGHT")direction="LEFT";
-if((e.key==="ArrowRight"||e.key==="d")&&direction!=="LEFT")direction="RIGHT";
-if((e.key==="ArrowUp"||e.key==="w")&&direction!=="DOWN")direction="UP";
-if((e.key==="ArrowDown"||e.key==="s")&&direction!=="UP")direction="DOWN";
+document.addEventListener("keydown", e=>{
+    if(e.key==="ArrowUp" && dy===0){dx=0;dy=-1;}
+    if(e.key==="ArrowDown" && dy===0){dx=0;dy=1;}
+    if(e.key==="ArrowLeft" && dx===0){dx=-1;dy=0;}
+    if(e.key==="ArrowRight" && dx===0){dx=1;dy=0;}
 });
 
-document.getElementById("restartBtn").onclick=initGame;
+function restartGame() {
+    initGame();
+}
+
+function increaseSpeed() {
+    if(speed > 40) {
+        speed -= 10;
+        startGame();
+    }
+}
+
+function increaseSize() {
+    snake.push({...snake[snake.length-1]});
+}
 
 initGame();
-draw();
 </script>
 
 </body>

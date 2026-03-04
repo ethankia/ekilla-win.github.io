@@ -22,38 +22,6 @@ background:linear-gradient(135deg,#8b5cf6,#3b82f6,#06b6d4);
 -webkit-text-fill-color:transparent;
 }
 
-.game-container{
-background:linear-gradient(145deg,#1e1e1e,#262626);
-border:2px solid rgba(139,92,246,0.4);
-box-shadow:0 0 40px rgba(139,92,246,0.25);
-position:relative;
-}
-
-#snake-game{
-border-radius:12px;
-background:#111;
-box-shadow:0 0 25px rgba(139,92,246,0.3) inset;
-}
-
-.death-screen{
-position:absolute;
-inset:0;
-background:rgba(0,0,0,0.85);
-display:flex;
-flex-direction:column;
-align-items:center;
-justify-content:center;
-text-align:center;
-opacity:0;
-pointer-events:none;
-transition:0.3s ease;
-}
-
-.death-screen.active{
-opacity:1;
-pointer-events:auto;
-}
-
 .project-card{
 background:linear-gradient(135deg,#1e1e1e,#2d2d2d);
 border:1px solid rgba(139,92,246,0.25);
@@ -84,21 +52,21 @@ border-color:rgba(139,92,246,.6);
 </nav>
 
 <!-- HEADER -->
-<section class="pt-28 pb-16 text-center">
+<section class="pt-28 pb-16 text-center bg-gradient-to-br from-gray-900 via-purple-900/20 to-blue-900/20">
 <h1 class="text-5xl font-bold mb-4 gradient-text">My Projects</h1>
 <p class="text-gray-400 text-lg">Explore my work and interactive demos</p>
 </section>
 
-<!-- SNAKE -->
+<!-- SNAKE GAME -->
 <section class="py-16">
-<div class="max-w-6xl mx-auto px-4">
-<h2 class="text-4xl font-bold text-center mb-12 gradient-text">Snake Game</h2>
+<div class="max-w-6xl mx-auto px-4 text-center">
+<h2 class="text-4xl font-bold mb-12 gradient-text">Snake Game</h2>
 
-<div class="game-container rounded-xl p-8 flex flex-col items-center">
+<div class="relative inline-block">
 
-<canvas id="snake-game" width="400" height="400"></canvas>
+<canvas id="snake-game" width="400" height="400" class="rounded-xl shadow-2xl"></canvas>
 
-<div class="mt-6 flex justify-between w-full max-w-md">
+<div class="mt-6 flex justify-between items-center max-w-md mx-auto">
 <div class="text-2xl font-bold">
 Score: <span id="score" class="gradient-text">0</span>
 </div>
@@ -108,7 +76,8 @@ Restart
 </button>
 </div>
 
-<div class="death-screen" id="deathScreen">
+<div id="deathScreen"
+class="absolute inset-0 flex flex-col items-center justify-center text-center bg-black/80 backdrop-blur-sm opacity-0 pointer-events-none transition duration-300 rounded-xl">
 <h2 class="text-4xl font-bold gradient-text mb-4">Game Over</h2>
 <p class="text-gray-300 mb-4">Final Score: <span id="finalScore"></span></p>
 <p class="text-gray-400 text-sm">Press Space to Restart</p>
@@ -118,7 +87,7 @@ Restart
 </div>
 </section>
 
-<!-- PROJECT GRID (RESTORED) -->
+<!-- PROJECT GRID -->
 <section class="py-16 bg-gray-800/50">
 <div class="max-w-6xl mx-auto px-4">
 <h2 class="text-4xl font-bold text-center mb-12 gradient-text">More Projects</h2>
@@ -166,84 +135,118 @@ Restart
 <script>
 const canvas=document.getElementById("snake-game");
 const ctx=canvas.getContext("2d");
-const box=20;
+const size=20;
+const grid=20;
 
-let snake,direction,food,score,game,running=false;
+let snake,direction,food,score,running;
+let particles=[];
 
 function initGame(){
-snake=[{x:200,y:200}];
+snake=[{x:10,y:10}];
 direction=null;
 score=0;
 running=true;
+particles=[];
 document.getElementById("score").textContent=0;
-document.getElementById("deathScreen").classList.remove("active");
+document.getElementById("deathScreen").classList.remove("opacity-100");
 spawnFood();
-clearInterval(game);
-game=setInterval(draw,100);
 }
 
 function spawnFood(){
-food={
-x:Math.floor(Math.random()*20)*box,
-y:Math.floor(Math.random()*20)*box
-};
-}
-
-function draw(){
-ctx.fillStyle="#111";
-ctx.fillRect(0,0,400,400);
-
-ctx.fillStyle="#06b6d4";
-ctx.fillRect(food.x,food.y,box,box);
-
-for(let i=0;i<snake.length;i++){
-ctx.fillStyle=i===0?"#8b5cf6":"#a78bfa";
-ctx.fillRect(snake[i].x,snake[i].y,box,box);
-}
-
-let headX=snake[0].x;
-let headY=snake[0].y;
-
-if(direction==="LEFT")headX-=box;
-if(direction==="RIGHT")headX+=box;
-if(direction==="UP")headY-=box;
-if(direction==="DOWN")headY+=box;
-
-if(headX===food.x&&headY===food.y){
-score++;
-document.getElementById("score").textContent=score;
-spawnFood();
-}else{
-snake.pop();
-}
-
-const newHead={x:headX,y:headY};
-
-if(
-headX<0||headX>=400||
-headY<0||headY>=400||
-snake.some(s=>s.x===headX&&s.y===headY)
-){
-gameOver();
-return;
-}
-
-snake.unshift(newHead);
+food={x:Math.floor(Math.random()*grid),y:Math.floor(Math.random()*grid)};
 }
 
 function gameOver(){
 running=false;
-clearInterval(game);
 document.getElementById("finalScore").textContent=score;
-document.getElementById("deathScreen").classList.add("active");
+document.getElementById("deathScreen").classList.add("opacity-100");
+burstParticles(snake[0].x*size,snake[0].y*size,"#ff4d6d");
+}
+
+function burstParticles(x,y,color){
+for(let i=0;i<25;i++){
+particles.push({x,y,vx:(Math.random()-0.5)*4,vy:(Math.random()-0.5)*4,life:40,color});
+}
+}
+
+function drawGrid(){
+ctx.strokeStyle="rgba(255,255,255,0.03)";
+for(let i=0;i<400;i+=size){
+ctx.beginPath();ctx.moveTo(i,0);ctx.lineTo(i,400);ctx.stroke();
+ctx.beginPath();ctx.moveTo(0,i);ctx.lineTo(400,i);ctx.stroke();
+}
+}
+
+function draw(){
+ctx.fillStyle="#0a0a0a";
+ctx.fillRect(0,0,400,400);
+drawGrid();
+
+if(running){
+let head={...snake[0]};
+if(direction==="LEFT")head.x--;
+if(direction==="RIGHT")head.x++;
+if(direction==="UP")head.y--;
+if(direction==="DOWN")head.y++;
+
+if(head.x<0||head.x>=grid||head.y<0||head.y>=grid||snake.some(s=>s.x===head.x&&s.y===head.y)){
+gameOver();
+}else{
+snake.unshift(head);
+if(head.x===food.x&&head.y===food.y){
+score++;
+document.getElementById("score").textContent=score;
+burstParticles(food.x*size,food.y*size,"#06b6d4");
+spawnFood();
+}else{
+snake.pop();
+}
+}
+}
+
+drawFood();
+drawSnake();
+drawParticles();
+requestAnimationFrame(draw);
+}
+
+function drawSnake(){
+snake.forEach((seg,i)=>{
+let x=seg.x*size;
+let y=seg.y*size;
+let gradient=ctx.createLinearGradient(x,y,x+size,y+size);
+gradient.addColorStop(0,"#8b5cf6");
+gradient.addColorStop(1,"#06b6d4");
+ctx.fillStyle=gradient;
+ctx.beginPath();
+ctx.roundRect(x+2,y+2,size-4,size-4,8);
+ctx.fill();
+});
+}
+
+function drawFood(){
+ctx.shadowColor="#06b6d4";
+ctx.shadowBlur=15;
+ctx.fillStyle="#06b6d4";
+ctx.beginPath();
+ctx.arc(food.x*size+size/2,food.y*size+size/2,6,0,Math.PI*2);
+ctx.fill();
+ctx.shadowBlur=0;
+}
+
+function drawParticles(){
+particles.forEach((p,i)=>{
+p.x+=p.vx;p.y+=p.vy;p.life--;
+ctx.globalAlpha=p.life/40;
+ctx.fillStyle=p.color;
+ctx.fillRect(p.x,p.y,4,4);
+ctx.globalAlpha=1;
+if(p.life<=0)particles.splice(i,1);
+});
 }
 
 document.addEventListener("keydown",e=>{
-if(e.code==="Space"){
-e.preventDefault();
-initGame();
-return;
-}
+if(e.code==="Space"){e.preventDefault();initGame();return;}
 if(!running)return;
 if((e.key==="ArrowLeft"||e.key==="a")&&direction!=="RIGHT")direction="LEFT";
 if((e.key==="ArrowRight"||e.key==="d")&&direction!=="LEFT")direction="RIGHT";
@@ -254,6 +257,7 @@ if((e.key==="ArrowDown"||e.key==="s")&&direction!=="UP")direction="DOWN";
 document.getElementById("restartBtn").onclick=initGame;
 
 initGame();
+draw();
 </script>
 
 </body>

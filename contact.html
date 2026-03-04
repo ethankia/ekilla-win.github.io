@@ -1,74 +1,110 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact - EK Development</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        body { font-family: 'Inter', sans-serif; background: #0a0a0a; }
-        .code-font { font-family: 'JetBrains Mono', monospace; }
-        .gradient-text {
-            background: linear-gradient(135deg, #8b5cf6, #3b82f6, #06b6d4);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        .form-container {
-            background: linear-gradient(135deg, #1e1e1e 0%, #2d2d2d 100%);
-            border: 1px solid rgba(139, 92, 246, 0.2);
-        }
-        .form-input { background: #2d2d2d; border: 1px solid #404040; transition: all 0.3s ease; }
-        .form-input:focus {
-            border-color: #8b5cf6;
-            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
-            outline: none;
-        }
-        .glow-text { text-shadow: 0 0 20px rgba(139, 92, 246, 0.5); }
-        .hover-lift { transition: transform 0.3s ease; }
-        .hover-lift:hover { transform: translateY(-2px); }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact - EK Development</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+body { font-family: 'Inter', sans-serif; background: #0a0a0a; }
+.code-font { font-family: 'JetBrains Mono', monospace; }
+.gradient-text {
+background: linear-gradient(135deg, #8b5cf6, #3b82f6, #06b6d4);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+background-clip: text;
+}
+.form-container {
+background: linear-gradient(135deg, #1e1e1e 0%, #2d2d2d 100%);
+border: 1px solid rgba(139, 92, 246, 0.2);
+}
+.form-input { background: #2d2d2d; border: 1px solid #404040; transition: all 0.3s ease; }
+.form-input:focus {
+border-color: #8b5cf6;
+box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+outline: none;
+}
+.glow-text { text-shadow: 0 0 20px rgba(139, 92, 246, 0.5); }
+.hover-lift { transition: transform 0.3s ease; }
+.hover-lift:hover { transform: translateY(-2px); }
+</style>
 </head>
+
 <body class="bg-gray-900 text-white min-h-screen">
 
+<!-- NAVIGATION -->
 <nav class="fixed top-0 w-full bg-gray-900/80 backdrop-blur-md z-50 border-b border-gray-800">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between items-center h-16">
-            <h1 class="text-xl font-bold code-font gradient-text">EK Development</h1>
-        </div>
-    </div>
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-16">
+
+<div class="flex items-center">
+<h1 class="text-xl font-bold code-font gradient-text">EK Development</h1>
+</div>
+
+<div class="hidden md:block">
+<div class="ml-10 flex items-baseline space-x-8">
+<a href="index.html" class="text-gray-300 hover:text-purple-300 px-3 py-2 text-sm font-medium transition-colors">Home</a>
+<a href="pricing.html" class="text-gray-300 hover:text-purple-300 px-3 py-2 text-sm font-medium transition-colors">Pricing</a>
+<a href="projects.html" class="text-gray-300 hover:text-purple-300 px-3 py-2 text-sm font-medium transition-colors">Projects</a>
+<a href="contact.html" class="text-purple-400 hover:text-purple-300 px-3 py-2 text-sm font-medium transition-colors">Contact</a>
+</div>
+</div>
+
+<div class="md:hidden">
+<button id="mobile-menu-btn" class="text-gray-300 hover:text-purple-300">
+<svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+d="M4 6h16M4 12h16M4 18h16"/>
+</svg>
+</button>
+</div>
+
+</div>
+</div>
+
+<div id="mobile-menu" class="hidden md:hidden bg-gray-800 border-t border-gray-700">
+<div class="px-2 pt-2 pb-3 space-y-1">
+<a href="index.html" class="text-gray-300 hover:text-purple-300 block px-3 py-2 text-base font-medium">Home</a>
+<a href="pricing.html" class="text-gray-300 hover:text-purple-300 block px-3 py-2 text-base font-medium">Pricing</a>
+<a href="projects.html" class="text-gray-300 hover:text-purple-300 block px-3 py-2 text-base font-medium">Projects</a>
+<a href="contact.html" class="text-purple-400 block px-3 py-2 text-base font-medium">Contact</a>
+</div>
+</div>
 </nav>
 
+<!-- HEADER -->
 <section class="pt-24 pb-12 bg-gradient-to-br from-gray-900 via-purple-900/20 to-blue-900/20 text-center">
-    <h1 class="text-5xl md:text-6xl font-bold mb-6 glow-text">Get In Touch</h1>
-    <p class="text-xl text-gray-300 mb-8">Ready to start your project? Let's discuss your requirements</p>
+<h1 class="text-5xl md:text-6xl font-bold mb-6 glow-text">Get In Touch</h1>
+<p class="text-xl text-gray-300 mb-8">Ready to start your project? Let's discuss your requirements</p>
 </section>
 
+<!-- MAIN CONTENT -->
 <section class="py-16">
 <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-2 gap-12">
 
-<!-- Contact Form -->
+<!-- CONTACT FORM (UNCHANGED) -->
 <div class="form-container rounded-xl p-8">
 <h2 class="text-3xl font-bold mb-6 gradient-text">Project Inquiry</h2>
 
 <form id="contact-form" class="space-y-6">
 
 <div>
-<label class="block text-sm font-medium text-gray-300 mb-2">Name *</label>
+<label for="name" class="block text-sm font-medium text-gray-300 mb-2">Name *</label>
 <input type="text" id="name" required
 class="w-full px-4 py-3 rounded-lg form-input text-white">
 </div>
 
 <div>
-<label class="block text-sm font-medium text-gray-300 mb-2">Discord Username *</label>
+<label for="discord" class="block text-sm font-medium text-gray-300 mb-2">Discord Username *</label>
 <input type="text" id="discord" required
 class="w-full px-4 py-3 rounded-lg form-input text-white">
 </div>
 
 <div>
-<label class="block text-sm font-medium text-gray-300 mb-2">Payment Method *</label>
+<label for="paymentMethod" class="block text-sm font-medium text-gray-300 mb-2">Payment Method *</label>
 <select id="paymentMethod" required
 class="w-full px-4 py-3 rounded-lg form-input text-white">
 <option value="">Select payment method</option>
@@ -81,7 +117,7 @@ class="w-full px-4 py-3 rounded-lg form-input text-white">
 </div>
 
 <div>
-<label class="block text-sm font-medium text-gray-300 mb-2">Project Type *</label>
+<label for="projectType" class="block text-sm font-medium text-gray-300 mb-2">Project Type *</label>
 <select id="projectType" required
 class="w-full px-4 py-3 rounded-lg form-input text-white">
 <option value="">Select project type</option>
@@ -91,7 +127,7 @@ class="w-full px-4 py-3 rounded-lg form-input text-white">
 </div>
 
 <div>
-<label class="block text-sm font-medium text-gray-300 mb-2">Do you understand that more questions will be asked via DM's? *</label>
+<label for="understanding" class="block text-sm font-medium text-gray-300 mb-2">Do you understand that more questions will be asked via DM's? *</label>
 <select id="understanding" required
 class="w-full px-4 py-3 rounded-lg form-input text-white">
 <option value="">Please select</option>
@@ -101,7 +137,7 @@ class="w-full px-4 py-3 rounded-lg form-input text-white">
 </div>
 
 <div>
-<label class="block text-sm font-medium text-gray-300 mb-2">Additional Details</label>
+<label for="message" class="block text-sm font-medium text-gray-300 mb-2">Additional Details</label>
 <textarea id="message" rows="4"
 class="w-full px-4 py-3 rounded-lg form-input text-white"></textarea>
 </div>
@@ -114,7 +150,7 @@ Send Message
 </form>
 </div>
 
-<!-- Alternative Contact -->
+<!-- ALTERNATIVE CONTACT -->
 <div>
 <h3 class="text-2xl font-bold mb-4 gradient-text">Alternative Contact</h3>
 
@@ -145,7 +181,7 @@ Text 616-387-0268
 <p class="text-gray-400 code-font">© 2026 EK Development. All rights reserved.</p>
 </footer>
 
-<!-- Webhook Script -->
+<!-- WEBHOOK SCRIPT -->
 <script>
 document.getElementById("contact-form").addEventListener("submit", async function(e) {
 e.preventDefault();
@@ -155,12 +191,12 @@ embeds: [{
 title: "New Project Inquiry",
 color: 0x8b5cf6,
 fields: [
-{ name: "Name", value: document.getElementById("name").value, inline: true },
-{ name: "Discord", value: document.getElementById("discord").value, inline: true },
-{ name: "Payment Method", value: document.getElementById("paymentMethod").value, inline: true },
-{ name: "Project Type", value: document.getElementById("projectType").value, inline: true },
-{ name: "Understands DM Questions", value: document.getElementById("understanding").value, inline: true },
-{ name: "Additional Details", value: document.getElementById("message").value || "None provided" }
+{ name: "Name", value: name.value, inline: true },
+{ name: "Discord", value: discord.value, inline: true },
+{ name: "Payment Method", value: paymentMethod.value, inline: true },
+{ name: "Project Type", value: projectType.value, inline: true },
+{ name: "Understands DM Questions", value: understanding.value, inline: true },
+{ name: "Additional Details", value: message.value || "None provided" }
 ],
 timestamp: new Date()
 }]
